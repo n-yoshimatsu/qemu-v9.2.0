@@ -195,8 +195,12 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
 
     if (virtio_gpu_virgl_enabled(g->conf)) {
         /* use larger control queue in 3d mode */
+        virtio_add_queue(vdev, 4096 ctrl_cb);
+        virtio_add_queue(vdev, 256, cursor_cb);
+        /* original
         virtio_add_queue(vdev, 256, ctrl_cb);
         virtio_add_queue(vdev, 16, cursor_cb);
+        */
     } else {
         virtio_add_queue(vdev, 64, ctrl_cb);
         virtio_add_queue(vdev, 16, cursor_cb);
